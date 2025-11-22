@@ -3,17 +3,22 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import os
 
-# Dummy dashboard for testing
+# --- IMPORT DASHBOARD LOGIC ---
+# This block ensures the dashboard loads correctly regardless of how you run the file
 try:
+    # Try relative import (Best when running from main.py)
     from .dashboard import Dashboard
 except ImportError:
     try:
+        # Try direct import (Best when testing login_form.py directly)
         from dashboard import Dashboard
     except ImportError:
+        # Fallback if dashboard.py is missing entirely
+        print("Warning: dashboard.py not found. Using dummy dashboard.")
         class Dashboard:
             def __init__(self, root):
-                root.title("Dashboard")
-                tk.Label(root, text="Dashboard Loaded!", font=("Arial", 20)).pack(pady=50)
+                root.title("Dashboard (Fallback)")
+                tk.Label(root, text="Dashboard File Not Found", font=("Arial", 20, "bold")).pack(pady=50)
 
 class LoginForm:
     def __init__(self, root):
@@ -30,6 +35,7 @@ class LoginForm:
         # 2. Load Background Image
         self.bg_image_original = None
         try:
+            # Adjust this path if your folder structure changes
             PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
             IMAGE_PATH = os.path.join(PROJECT_ROOT, 'images', 'login_bg.jpg')
             
@@ -88,7 +94,6 @@ class LoginForm:
         self.root.bind("<Configure>", self.resize_ui)
 
     def resize_ui(self, event):
-        # --- THE FIX IS HERE ---
         # Only resize if the event comes from the main window (root)
         if event.widget == self.root:
             w = event.width
@@ -107,14 +112,19 @@ class LoginForm:
         username = self.username_entry.get()
         password = self.password_entry.get()
         
+        # Verify credentials
         if username == "admin" and password == "admin":
+            # Close the Login Window
             self.root.destroy()
+            
+            # Open the Dashboard
             try:
                 dashboard_root = tk.Tk()
-                Dashboard(dashboard_root)
+                app = Dashboard(dashboard_root)
                 dashboard_root.mainloop()
             except Exception as e:
-                messagebox.showerror("Error", f"Could not load dashboard: {e}")
+                print(f"Critical Error: {e}")
+                messagebox.showerror("Error", f"Failed to load Dashboard: {e}")
         else:
             messagebox.showerror("Login Failed", "Invalid username or password")
 
