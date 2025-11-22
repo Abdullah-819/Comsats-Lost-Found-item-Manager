@@ -1,0 +1,51 @@
+/* Background image */
+.login-body {
+    margin: 0;
+    padding: 0;
+    background: url("../images/login_bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+/* Login box */
+.login-container {
+    width: 350px;
+    background: rgba(255,255,255,0.85);
+    padding: 35px;
+    border-radius: 12px;
+    margin: 120px auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* Inputs */
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Button */
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background: #002c57;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background: #004080;
+}
+
+/* Error text */
+.error {
+    color: red;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
