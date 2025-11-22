@@ -1,134 +1,103 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import Qt, QSize
+import sys
 import os
 
-# --- IMPORT DASHBOARD LOGIC ---
-# This block ensures the dashboard loads correctly regardless of how you run the file
-try:
-    # Try relative import (Best when running from main.py)
-    from .dashboard import Dashboard
-except ImportError:
-    try:
-        # Try direct import (Best when testing login_form.py directly)
-        from dashboard import Dashboard
-    except ImportError:
-        # Fallback if dashboard.py is missing entirely
-        print("Warning: dashboard.py not found. Using dummy dashboard.")
-        class Dashboard:
-            def __init__(self, root):
-                root.title("Dashboard (Fallback)")
-                tk.Label(root, text="Dashboard File Not Found", font=("Arial", 20, "bold")).pack(pady=50)
+# --- LOGIN FORM ---
+class LoginForm(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("CUI Lost & Found - Login")
+        self.setGeometry(200, 100, 900, 600)
+        self.setMinimumSize(600, 450)
 
-class LoginForm:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("CUI Lost & Found - Login")
-        self.root.geometry("900x600") 
-        self.root.minsize(600, 450)
-        self.root.configure(bg="black")
+        # --- Background Image ---
+        self.bg_label = QLabel(self)
+        self.bg_label.setScaledContents(True)  # scales automatically
+        self.bg_label.setGeometry(0, 0, self.width(), self.height())
 
-        # 1. Setup Canvas
-        self.canvas = tk.Canvas(root, highlightthickness=0)
-        self.canvas.pack(fill="both", expand=True)
+        PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        IMAGE_PATH = os.path.join(PROJECT_ROOT, "images", "login_bg.jpg")
+        if os.path.exists(IMAGE_PATH):
+            self.bg_pixmap = QPixmap(IMAGE_PATH)
+            self.bg_label.setPixmap(self.bg_pixmap)
+        else:
+            self.bg_label.setStyleSheet("background-color: #3498db;")  # fallback color
 
-        # 2. Load Background Image
-        self.bg_image_original = None
-        try:
-            # Adjust this path if your folder structure changes
-            PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-            IMAGE_PATH = os.path.join(PROJECT_ROOT, 'images', 'login_bg.jpg')
-            
-            if os.path.exists(IMAGE_PATH):
-                self.bg_image_original = Image.open(IMAGE_PATH)
-                self.bg_photo = ImageTk.PhotoImage(self.bg_image_original)
-                self.bg_image_id = self.canvas.create_image(0, 0, anchor="nw", image=self.bg_photo)
-            else:
-                print(f"Image not found at: {IMAGE_PATH}")
-                self.canvas.configure(bg="#3498db") # Fallback Blue
-                
-        except Exception as e:
-            print(f"Background Error: {e}")
-            self.canvas.configure(bg="#3498db")
-
-        # 3. Create Login Card Frame
-        self.login_frame = tk.Frame(self.canvas, bg="white", bd=0, relief="flat")
-        
-        # Title
-        tk.Label(self.login_frame, text="USER LOGIN", font=("Segoe UI", 18, "bold"), 
-                 bg="white", fg="#333").pack(pady=(30, 10))
-
-        # Input Container
-        form_content = tk.Frame(self.login_frame, bg="white")
-        form_content.pack(padx=40, pady=20)
-
-        # Username
-        tk.Label(form_content, text="Username:", font=("Segoe UI", 11), bg="white", anchor="w").grid(row=0, column=0, sticky="w", pady=5)
-        self.username_entry = ttk.Entry(form_content, font=("Segoe UI", 11), width=28)
-        self.username_entry.grid(row=1, column=0, pady=(0, 15))
-
-        # Password
-        tk.Label(form_content, text="Password:", font=("Segoe UI", 11), bg="white", anchor="w").grid(row=2, column=0, sticky="w", pady=5)
-        self.password_entry = ttk.Entry(form_content, show="*", font=("Segoe UI", 11), width=28)
-        self.password_entry.grid(row=3, column=0, pady=(0, 25))
-
-        # Button
-        self.login_btn = tk.Button(
-            self.login_frame, text="LOGIN", font=("Segoe UI", 11, "bold"),
-            bg="#4CAF50", fg="white", activebackground="#45a049",
-            cursor="hand2", width=22, height=2, bd=0, 
-            command=self.login
+        # --- Semi-transparent login card ---
+        self.card = QLabel(self)
+        self.card.setStyleSheet(
+            "background-color: rgba(255, 255, 255, 200); border-radius: 15px;"
         )
-        self.login_btn.pack(pady=(0, 40))
-        
-        # Hover Effects
-        self.login_btn.bind("<Enter>", lambda e: self.login_btn.config(bg="#45a049"))
-        self.login_btn.bind("<Leave>", lambda e: self.login_btn.config(bg="#4CAF50"))
+        self.card.setFixedSize(400, 300)
+        self.center_card()
 
-        # 4. Place Frame on Canvas (Centered)
-        self.login_window_id = self.canvas.create_window(
-            450, 300, window=self.login_frame, anchor="center"
+        # --- Widgets inside card ---
+        self.username = QLineEdit(self.card)
+        self.username.setPlaceholderText("Username")
+        self.username.setGeometry(50, 80, 300, 40)
+
+        self.password = QLineEdit(self.card)
+        self.password.setPlaceholderText("Password")
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password.setGeometry(50, 140, 300, 40)
+
+        self.login_btn = QPushButton("Login", self.card)
+        self.login_btn.setGeometry(100, 200, 200, 50)
+        self.login_btn.setStyleSheet(
+            """
+            QPushButton {
+                background-color: #4CAF50; color: white; font-weight: bold;
+                border-radius: 10px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+            """
+        )
+        self.login_btn.clicked.connect(self.login)
+
+        # --- Resize event ---
+        self.resizeEvent = self.on_resize
+
+    def center_card(self):
+        """Centers the login card in the window."""
+        window_width = self.width()
+        window_height = self.height()
+        card_width = self.card.width()
+        card_height = self.card.height()
+        self.card.move(
+            (window_width - card_width) // 2, (window_height - card_height) // 2
         )
 
-        # 5. Bind Resize Event
-        self.root.bind("<Configure>", self.resize_ui)
-
-    def resize_ui(self, event):
-        # Only resize if the event comes from the main window (root)
-        if event.widget == self.root:
-            w = event.width
-            h = event.height
-
-            # Resize background image
-            if self.bg_image_original:
-                img = self.bg_image_original.resize((w, h), Image.Resampling.LANCZOS)
-                self.bg_photo = ImageTk.PhotoImage(img)
-                self.canvas.itemconfig(self.bg_image_id, image=self.bg_photo)
-
-            # Re-center the login card
-            self.canvas.coords(self.login_window_id, w // 2, h // 2)
+    def on_resize(self, event):
+        """Handle window resize: scale background and center card."""
+        if hasattr(self, 'bg_pixmap'):
+            self.bg_label.setPixmap(self.bg_pixmap.scaled(
+                self.size(), Qt.AspectRatioMode.KeepAspectRatioByExpanding
+            ))
+        self.bg_label.setGeometry(0, 0, self.width(), self.height())
+        self.center_card()
 
     def login(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-        
-        # Verify credentials
+        """Login verification."""
+        username = self.username.text()
+        password = self.password.text()
         if username == "admin" and password == "admin":
-            # Close the Login Window
-            self.root.destroy()
-            
-            # Open the Dashboard
+            self.close()
             try:
-                dashboard_root = tk.Tk()
-                app = Dashboard(dashboard_root)
-                dashboard_root.mainloop()
+                from dashboard import DashboardWindow
+                self.dashboard = DashboardWindow()
+                self.dashboard.show()
             except Exception as e:
-                print(f"Critical Error: {e}")
-                messagebox.showerror("Error", f"Failed to load Dashboard: {e}")
+                print(f"Error opening Dashboard: {e}")
         else:
-            messagebox.showerror("Login Failed", "Invalid username or password")
+            print("Invalid credentials")
 
+# --- RUN APP ---
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = LoginForm(root)
-    root.mainloop()
+    app = QApplication(sys.argv)
+    window = LoginForm()
+    window.show()
+    sys.exit(app.exec())
