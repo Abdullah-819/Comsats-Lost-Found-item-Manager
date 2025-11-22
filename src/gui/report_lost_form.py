@@ -31,6 +31,7 @@ class ReportLostForm:
         contact = self.contact_entry.get()
         
         # Dummy submission (we'll hook item_manager later)
+
         if item_name and description and contact:
             messagebox.showinfo("Success", f"Lost item '{item_name}' reported!")
             self.root.destroy()
