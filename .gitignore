@@ -1,0 +1,85 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+
+# -----------------------------
+# Virtual Environment
+# -----------------------------
+venv/
+env/
+ENV/
+.venv/
+
+# -----------------------------
+# Flask / Instance Folder
+# -----------------------------
+instance/
+*.db
+*.sqlite3
+
+# -----------------------------
+# Environment Variables
+# -----------------------------
+.env
+.env.*
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+logs/
+
+# -----------------------------
+# Cache / Bytecode
+# -----------------------------
+.cache/
+.ipynb_checkpoints/
+
+# -----------------------------
+# Tools / IDE
+# -----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------
+# OS Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Flask Migrations
+# -----------------------------
+migrations/
+*/__pycache__/
+
+# -----------------------------
+# User Uploads / File Storage
+# -----------------------------
+app/static/uploads/
+app/storage/files/
+app/storage/images/
+
+# -----------------------------
+# Reports
+# -----------------------------
+reports/*.pdf
+reports/*.txt
+reports/*.json
+
+# -----------------------------
+# Node / Optional Frontend
+# -----------------------------
+node_modules/
+dist/
+build/
+
