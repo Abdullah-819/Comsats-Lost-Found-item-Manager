@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-
+from dashboard import Dashboard 
 
 class LoginForm:
     def __init__(self, root):
