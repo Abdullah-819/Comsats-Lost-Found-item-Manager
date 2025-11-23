@@ -1,0 +1,59 @@
+/* General page styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Login container */
+.login-container {
+    width: 350px;
+    margin: 100px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Inputs */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Button */
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #002c57;
+}
+
+/* Flash messages */
+.flash {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.flash.success {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.flash.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+}

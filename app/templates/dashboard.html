@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ session['user'] }}</p>
+    <p>Items Lost: {{ stats.items_lost }}</p>
+    <p>Items Found: {{ stats.items_found }}</p>
+    <p>Resolved: {{ stats.resolved }}</p>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+</body>
+</html>
