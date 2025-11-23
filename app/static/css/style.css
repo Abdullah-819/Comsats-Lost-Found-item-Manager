@@ -25,6 +25,7 @@ body {
 /* Role selection page */
 .role-selection {
     height: 100vh;
+    width: 100%;
     background-image: url('../images/main_bg.jpg');
     background-size: cover;
     background-position: center;
@@ -72,10 +73,22 @@ body {
     transform: scale(1.1);
 }
 
-/* Admin login */
+/* Admin login page background */
+.admin-bg {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('../images/admin_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Admin login container */
 .login-container {
     width: 350px;
-    margin: 100px auto;
     padding: 30px;
     background: rgba(255,255,255,0.95);
     border-radius: 10px;
@@ -83,6 +96,7 @@ body {
     text-align: center;
 }
 
+/* Inputs and buttons */
 .login-container input {
     width: 100%;
     padding: 10px;
@@ -103,4 +117,23 @@ body {
 
 .login-container button:hover {
     background-color: #002c57;
+}
+
+/* Dashboard full-page background */
+.dashboard-page {
+    min-height: 100vh; /* full viewport height */
+    width: 100%;
+    background-image: url('../images/CUI_sahiwal_Mosque.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 50px;
+    color: white; /* adjust text color so it's readable */
+}
+
+/* Dashboard content box (optional) */
+.dashboard-content {
+    background: rgba(0,0,0,0.5); /* semi-transparent dark layer to make text readable */
+    padding: 20px;
+    border-radius: 10px;
 }

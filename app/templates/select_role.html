@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
+
 {% block content %}
-<div class="role-selection">
+<body class="role-selection">
     <h1>Welcome to CUI Lost & Found</h1>
+
     <div class="buttons">
         <a href="{{ url_for('dashboard.dashboard_view') }}" class="role-btn user-btn">Continue as User</a>
         <a href="{{ url_for('auth.admin_login') }}" class="role-btn admin-btn">Login as Admin</a>
     </div>
-</div>
+</body>
 {% endblock %}
