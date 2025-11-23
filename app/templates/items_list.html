@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body class="dashboard-page">
+
+    <div class="dashboard-content">
+
+        <h2 class="page-title">{{ type }}</h2>
+
+        <div class="items-grid">
+            {% for item in items %}
+            <div class="item-card frosty">
+
+                <h3 class="item-name">{{ item.name }}</h3>
+
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <p><strong>Status:</strong> {{ item.status }}</p>
+
+                {% if item.date %}
+                <p><strong>Date:</strong> {{ item.date }}</p>
+                {% endif %}
+
+                {% if role == 'admin' %}
+                <div class="admin-controls">
+                    <button class="admin-btn">Edit</button>
+                    <button class="admin-btn delete-btn">Delete</button>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top:25px;">
+            <a href="{{ url_for('dashboard.dashboard_view') }}" class="action-btn">⬅ Back to Dashboard</a>
+        </div>
+
+    </div>
+</body>
+{% endblock %}

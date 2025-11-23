@@ -3,39 +3,42 @@
 {% block content %}
 <body class="dashboard-page">
 
-    <!-- Dashboard Stats Section -->
-    <div class="stats-container">
-        <div class="stat-card">
-            <h3>Items Lost</h3>
-            <p>{{ stats.items_lost }}</p>
+    <div class="dashboard-content">
+
+        <!-- Dashboard Stats Section -->
+        <div class="stats-container">
+            <div class="stat-card frosty">
+                <h3>Items Lost</h3>
+                <p>{{ stats.items_lost }}</p>
+            </div>
+
+            <div class="stat-card frosty">
+                <h3>Items Found</h3>
+                <p>{{ stats.items_found }}</p>
+            </div>
+
+            <div class="stat-card frosty">
+                <h3>Resolved</h3>
+                <p>{{ stats.resolved }}</p>
+            </div>
         </div>
-        <div class="stat-card">
-            <h3>Items Found</h3>
-            <p>{{ stats.items_found }}</p>
+
+        <!-- Actions -->
+        <div class="dashboard-actions">
+            <a href="{{ url_for('dashboard.lost_items') }}" class="action-btn frosty">View Lost Items</a>
+            <a href="{{ url_for('dashboard.found_items') }}" class="action-btn frosty">View Found Items</a>
+
+            {% if role == 'admin' %}
+            <a href="#" class="action-btn frosty admin-btn">Add Item</a>
+            {% endif %}
         </div>
-        <div class="stat-card">
-            <h3>Resolved</h3>
-            <p>{{ stats.resolved }}</p>
+
+        <div style="margin-top: 40px;">
+            <a href="{{ url_for('auth.logout') }}" class="action-btn frosty" style="background-color:#dc3545;">
+                Logout
+            </a>
         </div>
+
     </div>
-
-    <!-- Actions Section -->
-    <div class="dashboard-actions">
-        <!-- FIXED ENDPOINT NAME -->
-        <a href="{{ url_for('dashboard.lost_items') }}" class="action-btn">View Lost Items</a>
-
-        <!-- FIXED ENDPOINT NAME -->
-        <a href="{{ url_for('dashboard.found_items') }}" class="action-btn">View Found Items</a>
-
-        {% if role == 'admin' %}
-            <a href="#" class="action-btn admin-btn">Add Item</a>
-        {% endif %}
-    </div>
-
-    <!-- Logout -->
-    <div style="margin-top: 40px;">
-        <a href="{{ url_for('auth.logout') }}" class="action-btn" style="background-color: #dc3545;">Logout</a>
-    </div>
-
 </body>
 {% endblock %}
