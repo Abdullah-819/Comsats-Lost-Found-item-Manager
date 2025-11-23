@@ -2,24 +2,85 @@
 
 {% block content %}
 <div class="dashboard-page">
-    <div class="page-header">
-    <h1>Lost Items</h1>
-</div>
 
+    <!-- Main Lost Items Card -->
+    <div class="frosty main-card">
+        <h1 class="main-card-title">Lost Items</h1>
 
-    <div class="items-list">
-        {% for item in items %}
-            <div class="item-card">
-                <h3>{{ item.name }}</h3>
-                <p><strong>Location:</strong> {{ item.location }}</p>
-                <p><strong>Status:</strong> {{ item.status }}</p>
-
+        <!-- Grid of individual lost items -->
+        <div class="items-grid">
+            <!-- Item 1 -->
+            <div class="item-card frosty">
+                <img src="{{ url_for('static', filename='images/image1.jpeg') }}" alt="Blue Water Bottle" class="item-img">
+                <h3>Blue Water Bottle</h3>
+                <p><strong>Location:</strong> Cafe</p>
+                <p>If found, please contact: 0328-6689099</p>
                 {% if role == 'admin' %}
-                    <button class="admin-btn edit">Edit</button>
-                    <button class="admin-btn delete">Delete</button>
+                    <div class="admin-controls">
+                        <button class="admin-btn edit">Edit</button>
+                        <button class="admin-btn delete">Delete</button>
+                    </div>
                 {% endif %}
             </div>
-        {% endfor %}
-    </div>
+
+            <!-- Item 2 -->
+            <div class="item-card frosty">
+                <img src="{{ url_for('static', filename='images/image2.jpeg') }}" alt="Earbuds" class="item-img">
+                <h3>Earbuds Lost</h3>
+                <p><strong>Location:</strong> C Ground, Back Side</p>
+                <p>If found, contact: 03704023979</p>
+                {% if role == 'admin' %}
+                    <div class="admin-controls">
+                        <button class="admin-btn edit">Edit</button>
+                        <button class="admin-btn delete">Delete</button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Item 3 -->
+            <div class="item-card frosty">
+                <img src="{{ url_for('static', filename='images/image3.jpeg') }}" alt="Found Item" class="item-img">
+                <h3>Found in MS Ground</h3>
+                <p>Jiska hai call karke le jaye</p>
+                <p>Contact: 03196970769</p>
+                {% if role == 'admin' %}
+                    <div class="admin-controls">
+                        <button class="admin-btn edit">Edit</button>
+                        <button class="admin-btn delete">Delete</button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Item 4 -->
+            <div class="item-card frosty">
+                <img src="{{ url_for('static', filename='images/image4.jpeg') }}" alt="Glasses Lost" class="item-img">
+                <h3>Glasses Lost</h3>
+                <p><strong>Location:</strong> C Ground</p>
+                <p>Someone please return this. Reward: 500 PKR</p>
+                {% if role == 'admin' %}
+                    <div class="admin-controls">
+                        <button class="admin-btn edit">Edit</button>
+                        <button class="admin-btn delete">Delete</button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Item 5 -->
+            <div class="item-card frosty">
+                <img src="{{ url_for('static', filename='images/image5.jpeg') }}" alt="Ahmad Ali's Lost Item" class="item-img">
+                <h3>Ahmad Ali</h3>
+                <p><strong>Roll No:</strong> Fa24-BCS-363</p>
+                <p>Hostel item missing. Contact: +92 318 8180228</p>
+                {% if role == 'admin' %}
+                    <div class="admin-controls">
+                        <button class="admin-btn edit">Edit</button>
+                        <button class="admin-btn delete">Delete</button>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div> <!-- End of items-grid -->
+    </div> <!-- End of main-card -->
+
 </div>
 {% endblock %}
