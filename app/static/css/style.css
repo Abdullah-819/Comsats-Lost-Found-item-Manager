@@ -1,9 +1,58 @@
 /* General body */
+/* Body for modern look, without blocking frosty effect */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    background: url('../images/main_bg.jpg') no-repeat center center fixed; /* background image for blur */
+    background-size: cover;
+    color: #fff; /* default text color */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+/* Optional subtle overlay to dim background */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2); /* dim to make frosty panels pop */
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Frosty/glass panels */
+.frosty {
+    background: rgba(255,255,255,0.1); /* semi-transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.frosty:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 15px rgba(0,123,255,0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+/* Example usage: login container */
+.login-container {
+    width: 350px;
+    margin: 100px auto;
+}
+
+
 
 /* Flash messages */
 .flash {
@@ -43,7 +92,7 @@ body {
 
 .buttons {
     display: flex;
-    gap: 30px;
+    gap: 20px;
 }
 
 .role-btn {
@@ -54,23 +103,56 @@ body {
     border-radius: 10px;
     transition: all 0.3s ease;
 }
+/* Base button style for all role-selection buttons */
+.role-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;            
+    font-size: 16px;              
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 12px;          
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    backdrop-filter: blur(8px);   
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.2);
+    min-height: 40px;             
+    perspective: 1000px;          
+    transform-style: preserve-3d; 
+}
 
+/* User button */
 .user-btn {
-    background-color: #007bff;
+    background-color: rgba(0, 225, 255, 0.25); 
+    border-color: rgba(0, 225, 255, 0.5);
 }
 
 .user-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.1);
+    background-color: rgba(0, 225, 255, 0.5);
+    transform: scale(1.08);                
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.3), 0 5px 15px rgba(0,0,0,0.25);
 }
 
+/* Admin button */
 .admin-btn {
-    background-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.25); 
+    border-color: rgba(40, 167, 69, 0.5);
 }
 
 .admin-btn:hover {
-    background-color: #1e7e34;
-    transform: scale(1.1);
+    background-color: rgba(40, 167, 69, 0.5);
+    transform: scale(1.08);                 
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.3), 0 5px 15px rgba(0,0,0,0.25);
+}
+
+
+.role-btn:hover {
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
 }
 
 /* Admin login page background */
@@ -86,14 +168,26 @@ body {
     align-items: center;
 }
 
-/* Admin login container */
+/* Admin login container with frosty effect */
 .login-container {
     width: 350px;
     padding: 30px;
-    background: rgba(255,255,255,0.95);
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.1); /* glassy/frosty effect */
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
     text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+/* Lift and glow effect on hover */
+.login-container:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 15px rgba(0, 123, 255, 0.4); /* subtle blue glow */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
 /* Inputs and buttons */
@@ -103,37 +197,68 @@ body {
     margin: 10px 0;
     border-radius: 6px;
     border: 1px solid #ccc;
+    background: rgba(255,255,255,0.2); /* slight transparency for inputs */
+    color: #000;
+}
+
+.login-container input::placeholder {
+    color: rgba(251, 2, 2, 0.6);
 }
 
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #004080;
+    background-color: rgba(0, 64, 128, 0.8); /* semi-transparent button */
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .login-container button:hover {
-    background-color: #002c57;
+    background-color: rgba(0, 64, 128, 1); /* solid on hover */
+    transform: scale(1.05);
 }
 
 /* Dashboard full-page background */
 .dashboard-page {
-    min-height: 100vh; /* full viewport height */
+    min-height: 100vh;
     width: 100%;
-    background-image: url('../images/CUI_sahiwal_Mosque.jpg');
+    background-image: url('../images/SHUGAL;.JPG');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 50px;
-    color: white; /* adjust text color so it's readable */
+    padding: 50px 20px; /* some top/bottom padding */
+    box-sizing: border-box;
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: flex-start; /* align to top */
 }
 
-/* Dashboard content box (optional) */
 .dashboard-content {
-    background: rgba(0,0,0,0.5); /* semi-transparent dark layer to make text readable */
-    padding: 20px;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 90%;
+    max-width: 1200px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease-in-out;
 }
+
+/* Stronger hover + glow effect */
+.dashboard-content:hover {
+    transform: translateY(-15px) scale(1.02);  
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6),   
+                0 0 20px rgba(0,255,255,0.4); 
+    backdrop-filter: blur(15px);                
+    -webkit-backdrop-filter: blur(15px);
+}
+
+
