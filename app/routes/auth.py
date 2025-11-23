@@ -1,32 +1,33 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 
-auth_bp = Blueprint("auth", __name__, url_prefix="")  # no template_folder needed if using app/templates
+auth_bp = Blueprint("auth", __name__)
 
-# Temporary user storage
-USERS = {"admin": "admin"}  # username: password
+# Redirect old /login URL to /admin-login
+@auth_bp.route("/login")
+def login_redirect():
+    return redirect(url_for("auth.admin_login"))
 
-@auth_bp.route("/login", methods=["GET", "POST"])
-def login():
-    # Redirect logged-in users to dashboard
-    if session.get("user"):
+# Admin login route
+@auth_bp.route("/admin-login", methods=["GET", "POST"])
+def admin_login():
+    if session.get("user") and session.get("role") == "admin":
         return redirect(url_for("dashboard.dashboard_view"))
 
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-
-        if USERS.get(username) == password:
+        if username == "admin" and password == "admin":  # Replace with secure method later
             session["user"] = username
-            flash("Login successful!", "success")
+            session["role"] = "admin"
+            flash("Admin login successful!", "success")
             return redirect(url_for("dashboard.dashboard_view"))
         else:
-            flash("Invalid username or password", "danger")
-
-    return render_template("login.html")
+            flash("Invalid admin credentials", "danger")
+    return render_template("admin_login.html")
 
 
 @auth_bp.route("/logout")
 def logout():
     session.clear()
     flash("Logged out successfully.", "success")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("role.select_role"))

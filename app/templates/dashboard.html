@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ session['user'] }}</p>
-    <p>Items Lost: {{ stats.items_lost }}</p>
-    <p>Items Found: {{ stats.items_found }}</p>
-    <p>Resolved: {{ stats.resolved }}</p>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<h1>Dashboard - Role: {{ role|capitalize }}</h1>
+
+<p>Items Lost: {{ stats.items_lost }}</p>
+<p>Items Found: {{ stats.items_found }}</p>
+<p>Resolved: {{ stats.resolved }}</p>
+
+{% if role == 'admin' %}
+    <h2>Admin Controls</h2>
+    <p>Edit / Delete / View all items here.</p>
+{% else %}
+    <h2>User View</h2>
+    <p>View lost/found items and filter them.</p>
+{% endif %}
+
+<a href="{{ url_for('auth.logout') }}">Logout</a>
+{% endblock %}

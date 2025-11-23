@@ -1,12 +1,78 @@
-/* General page styles */
+/* General body */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
     margin: 0;
     padding: 0;
 }
 
-/* Login container */
+/* Flash messages */
+.flash {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.flash.success {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.flash.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+/* Role selection page */
+.role-selection {
+    height: 100vh;
+    background-image: url('../images/main_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.role-selection h1 {
+    color: white;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.buttons {
+    display: flex;
+    gap: 30px;
+}
+
+.role-btn {
+    padding: 20px 40px;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.user-btn {
+    background-color: #007bff;
+}
+
+.user-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.admin-btn {
+    background-color: #28a745;
+}
+
+.admin-btn:hover {
+    background-color: #1e7e34;
+    transform: scale(1.1);
+}
+
+/* Admin login */
 .login-container {
     width: 350px;
     margin: 100px auto;
@@ -17,7 +83,6 @@ body {
     text-align: center;
 }
 
-/* Inputs */
 .login-container input {
     width: 100%;
     padding: 10px;
@@ -26,7 +91,6 @@ body {
     border: 1px solid #ccc;
 }
 
-/* Button */
 .login-container button {
     width: 100%;
     padding: 10px;
@@ -39,21 +103,4 @@ body {
 
 .login-container button:hover {
     background-color: #002c57;
-}
-
-/* Flash messages */
-.flash {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-}
-
-.flash.success {
-    color: #155724;
-    background-color: #d4edda;
-}
-
-.flash.danger {
-    color: #721c24;
-    background-color: #f8d7da;
 }

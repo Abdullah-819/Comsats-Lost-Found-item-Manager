@@ -5,12 +5,15 @@ dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 @dashboard_bp.route("/")
 def dashboard_view():
     if not session.get("user"):
-        flash("Please login first", "danger")
-        return redirect(url_for("auth.login"))
+        flash("Please login or continue as user", "danger")
+        return redirect(url_for("role.select_role"))
 
+    role = session.get("role", "user")  # Default to user
+    # Dummy stats for now
     stats = {
-        "items_lost": 0,
-        "items_found": 0,
-        "resolved": 0
+        "items_lost": 5,
+        "items_found": 3,
+        "resolved": 2
     }
-    return render_template("dashboard.html", stats=stats)
+
+    return render_template("dashboard.html", role=role, stats=stats)
