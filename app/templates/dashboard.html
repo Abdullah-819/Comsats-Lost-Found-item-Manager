@@ -2,22 +2,40 @@
 
 {% block content %}
 <body class="dashboard-page">
-    <div class="dashboard-content">
-        <h1>Dashboard - Role: {{ role|capitalize }}</h1>
 
-        <p>Items Lost: {{ stats.items_lost }}</p>
-        <p>Items Found: {{ stats.items_found }}</p>
-        <p>Resolved: {{ stats.resolved }}</p>
+    <!-- Dashboard Stats Section -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Items Lost</h3>
+            <p>{{ stats.items_lost }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Items Found</h3>
+            <p>{{ stats.items_found }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Resolved</h3>
+            <p>{{ stats.resolved }}</p>
+        </div>
+    </div>
+
+    <!-- Actions Section -->
+    <div class="dashboard-actions">
+        <!-- FIXED ENDPOINT NAME -->
+        <a href="{{ url_for('dashboard.lost_items') }}" class="action-btn">View Lost Items</a>
+
+        <!-- FIXED ENDPOINT NAME -->
+        <a href="{{ url_for('dashboard.found_items') }}" class="action-btn">View Found Items</a>
 
         {% if role == 'admin' %}
-            <h2>Admin Controls</h2>
-            <p>Edit / Delete / View all items here.</p>
-        {% else %}
-            <h2>User View</h2>
-            <p>View lost/found items and filter them.</p>
+            <a href="#" class="action-btn admin-btn">Add Item</a>
         {% endif %}
-
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
     </div>
+
+    <!-- Logout -->
+    <div style="margin-top: 40px;">
+        <a href="{{ url_for('auth.logout') }}" class="action-btn" style="background-color: #dc3545;">Logout</a>
+    </div>
+
 </body>
 {% endblock %}

@@ -1,38 +1,34 @@
-/* General body */
-/* Body for modern look, without blocking frosty effect */
+/* ---------------- General Body ---------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background: url('../images/main_bg.jpg') no-repeat center center fixed; /* background image for blur */
+    background: url('../images/main_bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff; /* default text color */
+    color: #fff;
     overflow-x: hidden;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optional subtle overlay to dim background */
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.2); /* dim to make frosty panels pop */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.2);
     pointer-events: none;
     z-index: 0;
 }
 
-/* Frosty/glass panels */
+/* ---------------- Frosty Glass Panel ---------------- */
 .frosty {
-    background: rgba(255,255,255,0.1); /* semi-transparent */
+    background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     padding: 30px;
     text-align: center;
@@ -46,32 +42,22 @@ body::before {
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Example usage: login container */
-.login-container {
-    width: 350px;
-    margin: 100px auto;
-}
-
-
-
-/* Flash messages */
+/* ---------------- Flash Messages ---------------- */
 .flash {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
 }
-
 .flash.success {
     color: #155724;
     background-color: #d4edda;
 }
-
 .flash.danger {
     color: #721c24;
     background-color: #f8d7da;
 }
 
-/* Role selection page */
+/* ---------------- Role Selection Page ---------------- */
 .role-selection {
     height: 100vh;
     width: 100%;
@@ -82,6 +68,7 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    perspective: 1000px;
 }
 
 .role-selection h1 {
@@ -90,72 +77,62 @@ body::before {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 
+/* Buttons container */
 .buttons {
     display: flex;
     gap: 20px;
 }
 
-.role-btn {
-    padding: 20px 40px;
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-/* Base button style for all role-selection buttons */
+/* Base role button */
 .role-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 20px;            
-    font-size: 16px;              
+    padding: 12px 24px;
+    font-size: 16px;
     font-weight: 600;
     color: white;
     text-decoration: none;
     text-align: center;
-    border-radius: 12px;          
+    border-radius: 12px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     cursor: pointer;
-    backdrop-filter: blur(8px);   
+    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition: all 0.3s ease-in-out;
     box-shadow: inset 0 0 5px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.2);
-    min-height: 40px;             
-    perspective: 1000px;          
-    transform-style: preserve-3d; 
+    min-height: 40px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 /* User button */
 .user-btn {
-    background-color: rgba(0, 225, 255, 0.25); 
+    background-color: rgba(0, 225, 255, 0.25);
     border-color: rgba(0, 225, 255, 0.5);
 }
-
 .user-btn:hover {
     background-color: rgba(0, 225, 255, 0.5);
-    transform: scale(1.08);                
+    transform: rotateY(5deg) rotateX(3deg) scale(1.08);
     box-shadow: inset 0 0 8px rgba(255,255,255,0.3), 0 5px 15px rgba(0,0,0,0.25);
 }
 
 /* Admin button */
 .admin-btn {
-    background-color: rgba(40, 167, 69, 0.25); 
+    background-color: rgba(40, 167, 69, 0.25);
     border-color: rgba(40, 167, 69, 0.5);
 }
-
 .admin-btn:hover {
     background-color: rgba(40, 167, 69, 0.5);
-    transform: scale(1.08);                 
+    transform: rotateY(-5deg) rotateX(-3deg) scale(1.08);
     box-shadow: inset 0 0 8px rgba(255,255,255,0.3), 0 5px 15px rgba(0,0,0,0.25);
 }
-
 
 .role-btn:hover {
     filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
 }
 
-/* Admin login page background */
+/* ---------------- Admin Login Page ---------------- */
 .admin-bg {
     min-height: 100vh;
     width: 100%;
@@ -168,60 +145,53 @@ body::before {
     align-items: center;
 }
 
-/* Admin login container with frosty effect */
 .login-container {
     width: 350px;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.1); /* glassy/frosty effect */
+    background: rgba(255,255,255,0.12);
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.2);
     text-align: center;
     transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
 }
-
-/* Lift and glow effect on hover */
 .login-container:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 15px rgba(0, 123, 255, 0.4); /* subtle blue glow */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 20px rgba(0, 123, 255, 0.4);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Inputs and buttons */
 .login-container input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border-radius: 6px;
     border: 1px solid #ccc;
-    background: rgba(255,255,255,0.2); /* slight transparency for inputs */
+    background: rgba(255,255,255,0.2);
     color: #000;
 }
-
 .login-container input::placeholder {
-    color: rgba(251, 2, 2, 0.6);
+    color: rgba(255,255,255,0.6);
 }
-
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: rgba(0, 64, 128, 0.8); /* semi-transparent button */
+    background-color: rgba(0, 64, 128, 0.8);
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 .login-container button:hover {
-    background-color: rgba(0, 64, 128, 1); /* solid on hover */
+    background-color: rgba(0, 64, 128, 1);
     transform: scale(1.05);
 }
 
-/* Dashboard full-page background */
+/* ---------------- Dashboard ---------------- */
 .dashboard-page {
     min-height: 100vh;
     width: 100%;
@@ -229,36 +199,45 @@ body::before {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 50px 20px; /* some top/bottom padding */
+    padding: 50px 20px;
     box-sizing: border-box;
     color: #fff;
     overflow-x: hidden;
     display: flex;
-    justify-content: center; /* center horizontally */
-    align-items: flex-start; /* align to top */
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .dashboard-content {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.12);
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.2);
     color: #fff;
     width: 90%;
     max-width: 1200px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease-in-out;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
 }
-
-/* Stronger hover + glow effect */
 .dashboard-content:hover {
-    transform: translateY(-15px) scale(1.02);  
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6),   
-                0 0 20px rgba(0,255,255,0.4); 
-    backdrop-filter: blur(15px);                
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 20px rgba(0,255,255,0.4);
+    backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
 }
 
-
+/* ---------------- Stats Cards ---------------- */
+.stats-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stats-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.3), 0 8px 20px rgba(0,255,255,0.3);
+}
