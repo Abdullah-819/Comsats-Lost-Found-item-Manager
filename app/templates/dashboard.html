@@ -3,6 +3,7 @@
 {% block content %}
 <body class="dashboard-page">
 
+    {% if role == 'admin' %}
     <div class="dashboard-content">
 
         <!-- Dashboard Stats Section -->
@@ -27,18 +28,18 @@
         <div class="dashboard-actions">
             <a href="{{ url_for('dashboard.lost_items') }}" class="action-btn frosty">View Lost Items</a>
             <a href="{{ url_for('dashboard.found_items') }}" class="action-btn frosty">View Found Items</a>
-
-            {% if role == 'admin' %}
             <a href="#" class="action-btn frosty admin-btn">Add Item</a>
-            {% endif %}
-        </div>
-
-        <div style="margin-top: 40px;">
-            <a href="{{ url_for('auth.logout') }}" class="action-btn frosty" style="background-color:#dc3545;">
-                Logout
-            </a>
         </div>
 
     </div>
+    {% endif %}
+
+    <!-- Logout button (visible for all roles) -->
+    <div style="margin-top: 40px; text-align: center;">
+        <a href="{{ url_for('auth.logout') }}" class="action-btn frosty" style="background-color:#dc3545;">
+            Logout
+        </a>
+    </div>
+
 </body>
 {% endblock %}
