@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="dashboard-page">
+    <div class="frosty main-card">
+        <h1 class="main-card-title">Upload Lost Item</h1>
+        <form method="POST" action="{{ url_for('dashboard.upload_item') }}">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+            
+            <label>Description:</label>
+            <textarea name="description"></textarea>
+
+            <label>Location:</label>
+            <input type="text" name="location">
+
+            <label>Contact:</label>
+            <input type="text" name="contact">
+
+            <label>Image URL:</label>
+            <input type="text" name="image_url" placeholder="static/images/...">
+
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
