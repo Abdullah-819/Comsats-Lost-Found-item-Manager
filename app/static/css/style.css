@@ -705,3 +705,155 @@ body::before {
 .close-btn:hover {
     color: #00d4ff;
 }
+.btn-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* space between icon and text */
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Hover effect for Upload button */
+.btn-upload:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 15px rgba(0,123,255,0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #00d4ff; /* subtle glow on hover text */
+}
+
+/* Optional: icon inside button */
+.btn-upload svg {
+    vertical-align: middle;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.btn-upload:hover svg {
+    transform: scale(1.2);
+}
+
+.upload-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Labels */
+.upload-form label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #e1e1e1;
+}
+
+/* Inputs + Textarea (Frosty Inputs) */
+.upload-form input[type="text"],
+.upload-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Input Focus Effect */
+.upload-form input[type="text"]:focus,
+.upload-form textarea:focus {
+    border-color: rgba(0, 238, 255, 0.7);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Textarea Size */
+.upload-form textarea {
+    height: 120px;
+    resize: none;
+}
+
+/* Submit Button */
+.upload-form button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s ease;
+    background: rgba(0, 238, 255, 0.3);
+    border: 1px solid rgba(0, 238, 255, 0.5);
+}
+
+.upload-form button:hover {
+    background: rgba(0, 238, 255, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Hide File Input */
+#file-ipload-btn {
+    display: none;
+}
+
+/* File Upload Button (Frosty) */
+.file-upload-label {
+    display: inline-block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.file-upload-label:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #00eaff;
+    transform: translateY(-2px);
+}
+
+/* Image Preview */
+.preview-image {
+    display: none;
+    margin-top: 15px;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+}
+.upload-form .file-upload-label {
+    display: block;
+    width: 100% !important;
+    margin: 12px 0;
+}
