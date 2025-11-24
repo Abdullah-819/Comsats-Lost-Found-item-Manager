@@ -2,8 +2,6 @@
 
 {% block content %}
 <div class="dashboard-page">
-
-    <!-- Main Card -->
     <div class="frosty main-card">
         <div class="card-header">
             <h1 class="main-card-title">Lost Items</h1>
@@ -25,10 +23,12 @@
         <div class="items-grid">
             {% for item in items %}
             <div class="item-card frosty">
-                <img src="{% if item.image_url %}{{ url_for('static', filename=item.image_url) }}{% else %}{{ url_for('static', filename='images/default.png') }}{% endif %}"
-                    alt="{{ item.name }}" class="item-img">
+                <div class="img-wrapper" data-index="{{ loop.index0 }}">
+                    <img src="{% if item.image_url %}{{ url_for('static', filename=item.image_url) }}{% else %}{{ url_for('static', filename='images/default.png') }}{% endif %}"
+                        alt="{{ item.name }}" class="item-img">
+                </div>
                 <h3>{{ item.name }}</h3>
-                <p>{{ item.description }}</p>
+                <p class="item-description">{{ item.description }}</p>
                 <p><strong>Location:</strong> {{ item.location }}</p>
                 <p>Contact: {{ item.contact }}</p>
 
@@ -43,4 +43,21 @@
         </div>
     </div>
 </div>
+
+<!-- Modal for image preview -->
+<div id="itemModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <img id="modal-img" src="#" alt="Item Image">
+        <div id="modal-details">
+            <h3 id="modal-name"></h3>
+            <p id="modal-description"></p>
+            <p><strong>Location:</strong> <span id="modal-location"></span></p>
+            <p>Contact: <span id="modal-contact"></span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Link external JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
