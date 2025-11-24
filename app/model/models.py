@@ -1,20 +1,17 @@
 from app import db
 import hashlib
 
-# -----------------------------
 # Password utilities
-# -----------------------------
+
 def hash_password(password):
-    """Return hashed password"""
     return hashlib.sha256(password.encode()).hexdigest()
 
 def verify_password(password, hashed):
-    """Verify a password against its hash"""
     return hash_password(password) == hashed
 
-# -----------------------------
+
 # Base Item Class
-# -----------------------------
+
 class BaseItem(db.Model):
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
@@ -25,17 +22,16 @@ class BaseItem(db.Model):
     image_url = db.Column(db.String(200))
     status = db.Column(db.String(50), default='lost')
 
-    # Save item to database
     def save(self):
+        """Save item to database"""
         db.session.add(self)
         db.session.commit()
 
-    # Update item status
     def update_status(self, new_status):
+        """Update item status"""
         self.status = new_status
         db.session.commit()
 
-    # Return dict representation
     def to_dict(self):
         return {
             'id': self.id,
@@ -46,10 +42,9 @@ class BaseItem(db.Model):
             'image_url': self.image_url,
             'status': self.status
         }
-
-# -----------------------------
+    
 # Lost Item Class
-# -----------------------------
+
 class LostItem(BaseItem):
     __tablename__ = 'lost_items'
     submitted_by_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
@@ -62,12 +57,11 @@ class LostItem(BaseItem):
         data['submitted_by_user'] = self.submitted_by_user
         return data
 
-# -----------------------------
 # Found Item Class
-# -----------------------------
+
 class FoundItem(BaseItem):
     __tablename__ = 'found_items'
-    submitted_by_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # optional
+    submitted_by_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
     def __repr__(self):
         return f"<FoundItem {self.name} at {self.location}>"
@@ -76,10 +70,9 @@ class FoundItem(BaseItem):
         data = super().to_dict()
         data['submitted_by_user'] = self.submitted_by_user
         return data
-
-# -----------------------------
+    
 # User Class
-# -----------------------------
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -88,9 +81,6 @@ class User(db.Model):
     _password = db.Column('password', db.String(200), nullable=False)
     role = db.Column(db.String(50), default='user')  # user/admin
 
-    # -----------------------------
-    # Password property (Encapsulation)
-    # -----------------------------
     @property
     def password(self):
         raise AttributeError("Password is write-only")
@@ -102,12 +92,10 @@ class User(db.Model):
     def check_password(self, raw_password):
         return verify_password(raw_password, self._password)
 
-    # Save user to DB
     def save(self):
         db.session.add(self)
         db.session.commit()
 
-    # Promote user to admin
     def promote_to_admin(self):
         self.role = 'admin'
         db.session.commit()
