@@ -3,12 +3,11 @@
 {% block content %}
 <div class="dashboard-page">
 
-    <!-- Main Lost Items Card -->
+    <!-- Main card visible for all users -->
     <div class="frosty main-card">
         <h1 class="main-card-title">Lost Items</h1>
-
-        <!-- Grid of individual lost items -->
         <div class="items-grid">
+
             <!-- Item 1 -->
             <div class="item-card frosty">
                 <img src="{{ url_for('static', filename='images/image1.jpeg') }}" alt="Blue Water Bottle" class="item-img">
@@ -16,10 +15,10 @@
                 <p><strong>Location:</strong> Cafe</p>
                 <p>If found, please contact: 0328-6689099</p>
                 {% if role == 'admin' %}
-                    <div class="admin-controls">
-                        <button class="admin-btn edit">Edit</button>
-                        <button class="admin-btn delete">Delete</button>
-                    </div>
+                <div class="admin-controls">
+                    <button class="admin-btn edit">Edit</button>
+                    <button class="admin-btn delete">Delete</button>
+                </div>
                 {% endif %}
             </div>
 
@@ -30,10 +29,10 @@
                 <p><strong>Location:</strong> C Ground, Back Side</p>
                 <p>If found, contact: 03704023979</p>
                 {% if role == 'admin' %}
-                    <div class="admin-controls">
-                        <button class="admin-btn edit">Edit</button>
-                        <button class="admin-btn delete">Delete</button>
-                    </div>
+                <div class="admin-controls">
+                    <button class="admin-btn edit">Edit</button>
+                    <button class="admin-btn delete">Delete</button>
+                </div>
                 {% endif %}
             </div>
 
@@ -44,10 +43,10 @@
                 <p>Jiska hai call karke le jaye</p>
                 <p>Contact: 03196970769</p>
                 {% if role == 'admin' %}
-                    <div class="admin-controls">
-                        <button class="admin-btn edit">Edit</button>
-                        <button class="admin-btn delete">Delete</button>
-                    </div>
+                <div class="admin-controls">
+                    <button class="admin-btn edit">Edit</button>
+                    <button class="admin-btn delete">Delete</button>
+                </div>
                 {% endif %}
             </div>
 
@@ -58,10 +57,10 @@
                 <p><strong>Location:</strong> C Ground</p>
                 <p>Someone please return this. Reward: 500 PKR</p>
                 {% if role == 'admin' %}
-                    <div class="admin-controls">
-                        <button class="admin-btn edit">Edit</button>
-                        <button class="admin-btn delete">Delete</button>
-                    </div>
+                <div class="admin-controls">
+                    <button class="admin-btn edit">Edit</button>
+                    <button class="admin-btn delete">Delete</button>
+                </div>
                 {% endif %}
             </div>
 
@@ -69,18 +68,18 @@
             <div class="item-card frosty">
                 <img src="{{ url_for('static', filename='images/image5.jpeg') }}" alt="Ahmad Ali's Lost Item" class="item-img">
                 <h3>Ahmad Ali</h3>
-                <p><strong>Roll No:</strong> Fa24-BCS-363</p>
+                <p><strong>Roll No:</strong> FA24-BCS-363</p>
                 <p>Hostel item missing. Contact: +92 318 8180228</p>
                 {% if role == 'admin' %}
-                    <div class="admin-controls">
-                        <button class="admin-btn edit">Edit</button>
-                        <button class="admin-btn delete">Delete</button>
-                    </div>
+                <div class="admin-controls">
+                    <button class="admin-btn edit">Edit</button>
+                    <button class="admin-btn delete">Delete</button>
+                </div>
                 {% endif %}
             </div>
 
-        </div> <!-- End of items-grid -->
-    </div> <!-- End of main-card -->
+        </div> <!-- End items-grid -->
+    </div> <!-- End main-card -->
 
 </div>
 {% endblock %}
