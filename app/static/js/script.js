@@ -36,12 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapper.addEventListener('click', () => showModal(index));
     });
 
-    // Close modal
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
     });
-
-    // Click outside modal to close
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
@@ -64,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 document.addEventListener('DOMContentLoaded', () => {
-    /* ===== Modal Animation & Lazy Load ===== */
     const modal = document.getElementById('itemModal');
     const modalImg = document.getElementById('modal-img');
     const modalContent = modal.querySelector('.modal-content');
@@ -101,12 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = index;
     }
 
-    /* ===== Item Card Click ===== */
     items.forEach((itemCard, index) => {
         const wrapper = itemCard.querySelector('.img-wrapper');
         wrapper.addEventListener('click', () => showModal(index));
-
-        // 3D Tilt Effect
         itemCard.addEventListener('mousemove', e => {
             const rect = itemCard.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -122,12 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ===== Close Modal ===== */
     const closeBtn = modal.querySelector('.close-btn');
     closeBtn.addEventListener('click', () => modal.style.display = 'none');
     window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
 
-    /* ===== Arrow & Escape Navigation ===== */
     window.addEventListener('keydown', e => {
         if(modal.style.display === 'block') {
             if(e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % items.length; showModal(currentIndex); }
@@ -135,8 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else if(e.key === 'Escape') { modal.style.display = 'none'; }
         }
     });
-
-    /* ===== Swipe Support for Mobile ===== */
     let startX = 0;
     modalContent.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
     modalContent.addEventListener('touchend', e => {
@@ -144,8 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(endX - startX > 50) { currentIndex = (currentIndex - 1 + items.length) % items.length; showModal(currentIndex); }
         else if(startX - endX > 50) { currentIndex = (currentIndex + 1) % items.length; showModal(currentIndex); }
     });
-
-    /* ===== Admin Login Transition ===== */
     const adminBtn = document.querySelector('.admin-btn');
     const roleSelection = document.querySelector('.role-selection');
     const adminLogin = document.querySelector('.login-wrapper');
@@ -168,8 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 400);
         });
     }
-
-    /* ===== Button Ripple Effect ===== */
     document.querySelectorAll('button, .role-btn, .action-btn').forEach(btn => {
         btn.addEventListener('click', e => {
             const circle = document.createElement('span');
@@ -182,8 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => circle.remove(), 600);
         });
     });
-
-    /* ===== Particle Background (Optional) ===== */
     const particleContainer = document.createElement('div');
     particleContainer.style.position = 'fixed';
     particleContainer.style.top = 0;

@@ -1045,7 +1045,6 @@ button span.ripple,
     }
 }
 
-/* Modal image fade-in + zoom */
 #modal-img.fade-in-zoom {
     animation: fadeInZoom 0.4s ease forwards;
 }
@@ -1061,7 +1060,6 @@ button span.ripple,
     }
 }
 
-/* Optional particle background */
 .particle {
     position: absolute;
     border-radius: 50%;
@@ -1072,4 +1070,26 @@ button span.ripple,
 @keyframes float-particle {
     from { transform: translateY(0) translateX(0); }
     to { transform: translateY(-50px) translateX(20px); }
+}
+.logout-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
 }
