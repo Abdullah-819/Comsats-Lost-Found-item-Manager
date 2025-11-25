@@ -1,23 +1,40 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
 <body class="admin-bg">
-    <div class="login-container">
-        <h2>Admin Login</h2>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <p class="flash {{ category }}">{{ message }}</p>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+    <div class="login-wrapper fade-in">
+        <div class="login-card">
+            <h2 class="admin-title">Admin Portal</h2>
+            <p class="admin-subtitle">Authorized Personnel Only</p>
 
-        <form method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-area">
+                    {% for category, message in messages %}
+                        <p class="flash {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="input-field">
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+
+                <div class="input-field">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
     </div>
+
 </body>
+
 {% endblock %}

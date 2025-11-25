@@ -157,70 +157,162 @@ body::before {
 
 /* Admin login page background */
 .admin-bg {
+    background: url('../images/admin_bg.jpg') center/cover no-repeat;
     min-height: 100vh;
-    width: 100%;
-    background-image: url('../images/admin_bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-/* Admin login container with frosty effect */
-.login-container {
-    width: 350px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.1); /* glassy/frosty effect */
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+/* Fade-in page animation */
+.fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------- */
+/* LOGIN CARD          */
+/* ------------------- */
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-card {
+    width: 380px;
+    padding: 40px;
     text-align: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
-}
 
-/* Lift and glow effect on hover */
-.login-container:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 15px rgba(0, 123, 255, 0.4); /* subtle blue glow */
+    background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 18px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: 0.4s ease-in-out;
 }
 
-/* Inputs and buttons */
-.login-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: rgba(255,255,255,0.2); /* slight transparency for inputs */
-    color: #000;
+.login-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 60px rgba(0, 0, 0, 0.55),
+                0 0 25px rgba(0, 150, 255, 0.4);
 }
 
-.login-container input::placeholder {
-    color: rgba(251, 2, 2, 0.6);
+/* ------------------- */
+/* TITLES              */
+/* ------------------- */
+
+.admin-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
 }
 
-.login-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: rgba(0, 64, 128, 0.8); /* semi-transparent button */
+.admin-subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+    opacity: 0.8;
     color: white;
-    border: none;
+}
+
+/* ------------------- */
+/* INPUT FIELDS        */
+/* ------------------- */
+
+.input-field {
+    position: relative;
+    margin: 25px 0;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 12px;
     border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-field input:focus {
+    border-color: #00aaff;
+    box-shadow: 0 0 8px rgba(0,170,255,0.6);
+}
+
+/* Animated floating label */
+.input-field label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.8);
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.input-field input:focus + label,
+.input-field input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 12px;
+    color: #00cfff;
+}
+
+/* ------------------- */
+/* BUTTON              */
+/* ------------------- */
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+
+    background: linear-gradient(135deg, #0059b3, #0088ff);
+    color: white;
+
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 16px;
+
+    transition: 0.3s ease;
 }
 
-.login-container button:hover {
-    background-color: rgba(0, 64, 128, 1); /* solid on hover */
+.login-btn:hover {
     transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
+/* ------------------- */
+/* FLASH MESSAGES      */
+/* ------------------- */
+
+.flash-area {
+    margin-bottom: 15px;
+}
+
+.flash {
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: white;
+}
+
+.flash.error { background: rgba(255, 0, 0, 0.6); }
+.flash.success { background: rgba(0, 180, 0, 0.6); }
+.flash.info { background: rgba(0, 140, 255, 0.6); }
 /* Dashboard full-page background */
 .dashboard-page {
     min-height: 100vh;
@@ -708,37 +800,31 @@ body::before {
 .btn-upload {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px; /* space between icon and text */
-    padding: 12px 25px;
+    gap: 8px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #00eaff55, #0077ff55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    color: white;
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
     text-decoration: none;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    transition: 0.25s ease;
 }
 
-/* Hover effect for Upload button */
 .btn-upload:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 15px rgba(0,123,255,0.3);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    color: #00d4ff; /* subtle glow on hover text */
+    background: linear-gradient(135deg, #00eaff88, #0077ff88);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    color: #00eaff;
 }
 
-/* Optional: icon inside button */
 .btn-upload svg {
-    vertical-align: middle;
-    fill: currentColor;
-    transition: transform 0.3s ease;
+    width: 18px;
+    height: 18px;
 }
+
 
 .btn-upload:hover svg {
     transform: scale(1.2);
@@ -753,6 +839,7 @@ body::before {
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.20);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    
 }
 
 /* Labels */
