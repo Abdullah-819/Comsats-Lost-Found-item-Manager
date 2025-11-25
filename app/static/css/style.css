@@ -944,6 +944,7 @@ body::before {
     width: 100% !important;
     margin: 12px 0;
 }
+
 /* Neon pulse effect on hover for all frosty buttons */
 .role-btn:hover,
 .login-btn:hover,
@@ -1024,4 +1025,51 @@ body::before {
 .admin-title,
 .page-header h1 {
     text-shadow: 0 0 8px #00eaff, 0 0 12px #00eaff77, 0 0 16px #00eaff55;
+}
+button span.ripple,
+.role-btn span.ripple,
+.action-btn span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple-effect 0.6s linear;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes ripple-effect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Modal image fade-in + zoom */
+#modal-img.fade-in-zoom {
+    animation: fadeInZoom 0.4s ease forwards;
+}
+
+@keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Optional particle background */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float-particle 4s ease-in-out infinite alternate;
+}
+
+@keyframes float-particle {
+    from { transform: translateY(0) translateX(0); }
+    to { transform: translateY(-50px) translateX(20px); }
 }
