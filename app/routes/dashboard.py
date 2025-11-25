@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, current_app
-from app.model.models import db, LostItem, FoundItem, User
+from app.model.models import db, LostItem, FoundItem
 from app.manager.item_manager import get_lost_items, get_found_items
-import os
 from werkzeug.utils import secure_filename
+import os
 
 dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 
@@ -13,7 +13,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # -----------------------------
-# Main Dashboard
+# Dashboard
 # -----------------------------
 @dashboard_bp.route("/")
 def dashboard_view():
@@ -26,7 +26,7 @@ def dashboard_view():
     return render_template("dashboard.html", role=role, stats=stats)
 
 # -----------------------------
-# Lost Items Page
+# Lost Items
 # -----------------------------
 @dashboard_bp.route("/lost")
 def lost_items():
@@ -35,7 +35,7 @@ def lost_items():
     return render_template("lost_items.html", items=items, role=role)
 
 # -----------------------------
-# Found Items Page
+# Found Items
 # -----------------------------
 @dashboard_bp.route("/found")
 def found_items():
@@ -44,25 +44,19 @@ def found_items():
     return render_template("found_items.html", items=items, role=role)
 
 # -----------------------------
-# User Upload Lost Item
+# Add Item (Admin & User)
 # -----------------------------
-@dashboard_bp.route("/upload_item", methods=["GET", "POST"])
-def upload_item():
-    if session.get("role") != "user":
-        flash("Only regular users can upload items.", "danger")
-        return redirect(url_for("dashboard.lost_items"))
-
+@dashboard_bp.route("/add_item", methods=["GET", "POST"])
+def add_item():
+    role = session.get("role", "user")
     if request.method == "POST":
+        item_type = request.form.get("item_type")  # lost or found
         name = request.form.get("name")
         description = request.form.get("description")
         location = request.form.get("location")
         contact = request.form.get("contact")
         file = request.files.get("image_file")
-        user_id = session.get("user_id")
-
-        if not user_id:
-            flash("User not logged in properly.", "danger")
-            return redirect(url_for("dashboard.lost_items"))
+        user_id = session.get("user_id") if role == "user" else None
 
         filename = ""
         if file and allowed_file(file.filename):
@@ -74,16 +68,60 @@ def upload_item():
         elif file:
             flash("Invalid image file type!", "warning")
 
-        new_item = LostItem(
-            name=name,
-            description=description,
-            location=location,
-            contact=contact,
-            image_url=filename,
-            submitted_by_user=user_id
-        )
-        new_item.save()
-        flash("Item uploaded successfully!", "success")
-        return redirect(url_for("dashboard.lost_items"))
+        if item_type == "lost":
+            new_item = LostItem(name=name, description=description, location=location,
+                                contact=contact, image_url=filename, submitted_by_user=user_id)
+        else:
+            new_item = FoundItem(name=name, description=description, location=location,
+                                 contact=contact, image_url=filename, submitted_by_user=user_id)
 
-    return render_template("upload_item.html")
+        new_item.save()
+        flash(f"{item_type.capitalize()} item added successfully!", "success")
+        return redirect(url_for(f"dashboard.{item_type}_items"))
+
+    return render_template("add_edit_item.html", role=role, action="Add")
+
+# -----------------------------
+# Edit Item
+# -----------------------------
+@dashboard_bp.route("/edit_item/<string:item_type>/<int:item_id>", methods=["GET", "POST"])
+def edit_item(item_type, item_id):
+    role = session.get("role", "user")
+    if item_type == "lost":
+        item = LostItem.query.get_or_404(item_id)
+    else:
+        item = FoundItem.query.get_or_404(item_id)
+
+    if request.method == "POST":
+        item.name = request.form.get("name")
+        item.description = request.form.get("description")
+        item.location = request.form.get("location")
+        item.contact = request.form.get("contact")
+        file = request.files.get("image_file")
+
+        if file and allowed_file(file.filename):
+            filename_secure = secure_filename(file.filename)
+            save_path = os.path.join(current_app.root_path, UPLOAD_FOLDER)
+            os.makedirs(save_path, exist_ok=True)
+            file.save(os.path.join(save_path, filename_secure))
+            item.image_url = f"uploads/{filename_secure}"
+
+        db.session.commit()
+        flash(f"{item_type.capitalize()} item updated successfully!", "success")
+        return redirect(url_for(f"dashboard.{item_type}_items"))
+
+    return render_template("add_edit_item.html", role=role, action="Edit", item=item, item_type=item_type)
+
+# -----------------------------
+# Delete Item
+# -----------------------------
+@dashboard_bp.route("/delete_item/<string:item_type>/<int:item_id>", methods=["POST"])
+def delete_item(item_type, item_id):
+    if item_type == "lost":
+        item = LostItem.query.get_or_404(item_id)
+    else:
+        item = FoundItem.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+    flash(f"{item_type.capitalize()} item deleted successfully!", "success")
+    return redirect(url_for(f"dashboard.{item_type}_items"))

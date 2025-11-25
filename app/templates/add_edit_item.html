@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="dashboard-page">
+    <div class="frosty main-card">
+        <h1>{{ action }} Item</h1>
+        <form method="POST" enctype="multipart/form-data" class="item-form">
+            {% if action == 'Add' %}
+            <label>Item Type:</label>
+            <select name="item_type" required>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+            </select>
+            {% endif %}
+
+            <label>Name</label>
+            <input type="text" name="name" value="{{ item.name if item else '' }}" required>
+
+            <label>Description</label>
+            <textarea name="description">{{ item.description if item else '' }}</textarea>
+
+            <label>Location</label>
+            <input type="text" name="location" value="{{ item.location if item else '' }}">
+
+            <label>Contact</label>
+            <input type="text" name="contact" value="{{ item.contact if item else '' }}">
+
+            <label>Image</label>
+            <input type="file" name="image_file">
+
+            <button type="submit" class="action-btn frosty">{{ action }} Item</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
