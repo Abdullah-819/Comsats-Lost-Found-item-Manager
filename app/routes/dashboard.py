@@ -9,8 +9,10 @@ dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # -----------------------------
 # Dashboard
@@ -21,9 +23,10 @@ def dashboard_view():
     stats = {
         "items_lost": len(get_lost_items()),
         "items_found": len(get_found_items()),
-        "resolved": sum(1 for i in get_lost_items() if i.status=="resolved")
+        "resolved": sum(1 for i in get_lost_items() if i.status == "resolved")
     }
     return render_template("dashboard.html", role=role, stats=stats)
+
 
 # -----------------------------
 # Lost Items
@@ -34,6 +37,7 @@ def lost_items():
     items = get_lost_items()
     return render_template("lost_items.html", items=items, role=role)
 
+
 # -----------------------------
 # Found Items
 # -----------------------------
@@ -43,14 +47,16 @@ def found_items():
     items = get_found_items()
     return render_template("found_items.html", items=items, role=role)
 
+
 # -----------------------------
-# Add Item (Admin & User)
+# Add Item
 # -----------------------------
 @dashboard_bp.route("/add_item", methods=["GET", "POST"])
 def add_item():
     role = session.get("role", "user")
     if request.method == "POST":
-        item_type = request.form.get("item_type")  # lost or found
+        # Ensure item_type always has a valid default
+        item_type = request.form.get("item_type") or "lost"
         name = request.form.get("name")
         description = request.form.get("description")
         location = request.form.get("location")
@@ -58,7 +64,7 @@ def add_item():
         file = request.files.get("image_file")
         user_id = session.get("user_id") if role == "user" else None
 
-        filename = ""
+        filename = None
         if file and allowed_file(file.filename):
             filename_secure = secure_filename(file.filename)
             save_path = os.path.join(current_app.root_path, UPLOAD_FOLDER)
@@ -68,7 +74,7 @@ def add_item():
         elif file:
             flash("Invalid image file type!", "warning")
 
-        if item_type == "lost":
+        if item_type.lower() == "lost":
             new_item = LostItem(name=name, description=description, location=location,
                                 contact=contact, image_url=filename, submitted_by_user=user_id)
         else:
@@ -77,9 +83,10 @@ def add_item():
 
         new_item.save()
         flash(f"{item_type.capitalize()} item added successfully!", "success")
-        return redirect(url_for(f"dashboard.{item_type}_items"))
+        return redirect(url_for(f"dashboard.{item_type.lower()}_items"))
 
-    return render_template("add_edit_item.html", role=role, action="Add")
+    return render_template("add_edit_item.html", role=role, action="Add", item_type="lost")
+
 
 # -----------------------------
 # Edit Item
@@ -87,6 +94,8 @@ def add_item():
 @dashboard_bp.route("/edit_item/<string:item_type>/<int:item_id>", methods=["GET", "POST"])
 def edit_item(item_type, item_id):
     role = session.get("role", "user")
+    item_type = item_type.lower() if item_type else "lost"
+
     if item_type == "lost":
         item = LostItem.query.get_or_404(item_id)
     else:
@@ -112,15 +121,19 @@ def edit_item(item_type, item_id):
 
     return render_template("add_edit_item.html", role=role, action="Edit", item=item, item_type=item_type)
 
+
 # -----------------------------
 # Delete Item
 # -----------------------------
 @dashboard_bp.route("/delete_item/<string:item_type>/<int:item_id>", methods=["POST"])
 def delete_item(item_type, item_id):
+    item_type = item_type.lower() if item_type else "lost"
+
     if item_type == "lost":
         item = LostItem.query.get_or_404(item_id)
     else:
         item = FoundItem.query.get_or_404(item_id)
+
     db.session.delete(item)
     db.session.commit()
     flash(f"{item_type.capitalize()} item deleted successfully!", "success")

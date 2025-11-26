@@ -7,17 +7,11 @@
             <h1 class="main-card-title">Lost Items</h1>
 
             {% if role == 'user' %}
-            <div class="user-nav-buttons" style="display:flex; gap:15px; justify-content:center; margin-bottom:15px;">
+            <div class="user-nav-buttons">
                 <button id="back-btn" class="action-btn frosty-btn">Go Back</button>
                 <a href="{{ url_for('role.select_role') }}" class="action-btn frosty-btn">Main Menu</a>
             </div>
             <a href="{{ url_for('dashboard.add_item') }}" class="btn-upload">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path
-                        d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2z" />
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                </svg>
                 Upload Lost Item
             </a>
             {% elif role == 'admin' %}
@@ -29,8 +23,7 @@
             {% for item in items %}
             <div class="item-card frosty">
                 <div class="img-wrapper" data-index="{{ loop.index0 }}">
-                    <img src="{% if item.image_url %}{{ url_for('static', filename=item.image_url) }}{% else %}{{ url_for('static', filename='images/default.png') }}{% endif %}"
-                        alt="{{ item.name }}" class="item-img">
+                    <img src="{% if item.image_url %}{{ url_for('static', filename=item.image_url) }}{% else %}{{ url_for('static', filename='images/default.png') }}{% endif %}" alt="{{ item.name }}" class="item-img">
                 </div>
                 <h3>{{ item.name }}</h3>
                 <p class="item-description">{{ item.description }}</p>

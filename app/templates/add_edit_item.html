@@ -3,33 +3,66 @@
 {% block content %}
 <div class="dashboard-page">
     <div class="frosty main-card">
-        <h1>{{ action }} Item</h1>
-        <form method="POST" enctype="multipart/form-data" class="item-form">
-            {% if action == 'Add' %}
-            <label>Item Type:</label>
-            <select name="item_type" required>
-                <option value="lost">Lost</option>
-                <option value="found">Found</option>
-            </select>
+        <h1 class="main-card-title">{{ action }} Item</h1>
+
+        <form class="upload-form frosty-form" 
+              method="POST" 
+              action="{{ url_for('dashboard.add_item') }}"
+              enctype="multipart/form-data">
+
+            <!-- Hidden input for item_type (lost/found) -->
+            <input type="hidden" name="item_type" value="{{ item_type if item_type else 'lost' }}">
+
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Item Name" required
+                   value="{{ item.name if item else '' }}">
+
+            <label>Description:</label>
+            <textarea name="description" placeholder="Describe the item...">{{ item.description if item else '' }}</textarea>
+
+            <label>Location:</label>
+            <input type="text" name="location" placeholder="Where it was lost" 
+                   value="{{ item.location if item else '' }}">
+
+            <label>Contact:</label>
+            <input type="text" name="contact" placeholder="Your contact info" 
+                   value="{{ item.contact if item else '' }}">
+
+            <!-- Frosty File Upload Button -->
+            <input type="file" id="file-upload-btn" name="image_file" accept="image/*" onchange="previewImage(event)" style="display:none;">
+            <label for="file-upload-btn" class="frosty-upload">
+                {{ 'Change Image' if item and item.image_url else 'Select Image' }}
+            </label>
+
+            <!-- Preview Box -->
+            {% if item and item.image_url %}
+                <img id="preview-img" class="preview-image" src="{{ url_for('static', filename=item.image_url) }}" style="display:block;">
+            {% else %}
+                <img id="preview-img" class="preview-image" src="" style="display:none;">
             {% endif %}
 
-            <label>Name</label>
-            <input type="text" name="name" value="{{ item.name if item else '' }}" required>
-
-            <label>Description</label>
-            <textarea name="description">{{ item.description if item else '' }}</textarea>
-
-            <label>Location</label>
-            <input type="text" name="location" value="{{ item.location if item else '' }}">
-
-            <label>Contact</label>
-            <input type="text" name="contact" value="{{ item.contact if item else '' }}">
-
-            <label>Image</label>
-            <input type="file" name="image_file">
-
-            <button type="submit" class="action-btn frosty">{{ action }} Item</button>
+            <button type="submit" class="upload-submit-btn">{{ action }} Item</button>
         </form>
     </div>
 </div>
+
+<script>
+function previewImage(event) {
+    const preview = document.getElementById('preview-img');
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+        preview.style.display = "none";
+    }
+}
+</script>
+
 {% endblock %}
